@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     mysql-client \
     ocaml \
-    expect
+    expect \
+    mc
 RUN curl -L https://github.com/bcpierce00/unison/archive/2.48.4.tar.gz | tar zxv -C /tmp && \
              cd /tmp/unison-2.48.4 && \
              sed -i -e 's/GLIBC_SUPPORT_INOTIFY 0/GLIBC_SUPPORT_INOTIFY 1/' src/fsmonitor/linux/inotify_stubs.c && \
@@ -57,7 +58,10 @@ RUN curl -L https://github.com/bcpierce00/unison/archive/2.48.4.tar.gz | tar zxv
     && mkdir /home/magento2/state \
     && curl -sS https://accounts.magento.cloud/cli/installer -o /home/magento2/installer \
     && rm -r /usr/local/etc/php-fpm.d/* \
-    && sed -i 's/www-data/magento2/g' /etc/apache2/envvars
+    && sed -i 's/www-data/magento2/g' /etc/apache2/envvars \
+    && curl -O https://files.magerun.net/n98-magerun2.phar \
+    && chmod +x ./n98-magerun2.phar \
+    && mv ./n98-magerun2.phar /usr/local/bin/
 
 # PHP config
 ADD conf/php.ini /usr/local/etc/php
@@ -101,12 +105,12 @@ RUN mkdir /windows \
  && rm 'unison 2.48.3 GTK.exe' \
  && chown -R magento2:magento2 .
 
-RUN mkdir /mac-osx \
- && cd /mac-osx \
- && curl -L -o unison-mac-osx.zip http://unison-binaries.inria.fr/files/Unison-OS-X-2.48.15.zip \
- && unzip unison-mac-osx.zip \
- && rm unison-mac-osx.zip \
- && chown -R magento2:magento2 .
+#RUN mkdir /mac-osx \
+# && cd /mac-osx \
+# && curl -L -o unison-mac-osx.zip http://unison-binaries.inria.fr/files/Unison-OS-X-2.48.15.zip \
+# && unzip unison-mac-osx.zip \
+# && rm unison-mac-osx.zip \
+# && chown -R magento2:magento2 .
 
 # Initial scripts
 COPY scripts/ /home/magento2/scripts/
