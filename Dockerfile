@@ -1,4 +1,4 @@
-FROM php:7.1-fpm-jessie
+FROM php:7.3-fpm-stretch
 
 MAINTAINER "Magento"
 
@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
     mysql-client \
     ocaml \
     expect \
+    libzip-dev \
     mc
 RUN curl -L https://github.com/bcpierce00/unison/archive/2.48.4.tar.gz | tar zxv -C /tmp && \
              cd /tmp/unison-2.48.4 && \
@@ -33,7 +34,8 @@ RUN curl -L https://github.com/bcpierce00/unison/archive/2.48.4.tar.gz | tar zxv
              cd /root && rm -rf /tmp/unison-2.48.4 \
 	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure hash --with-mhash \
-	&& docker-php-ext-install -j$(nproc) mcrypt intl xsl gd zip pdo_mysql opcache soap bcmath json iconv \
+	# && docker-php-ext-install -j$(nproc) mcrypt intl xsl gd zip pdo_mysql opcache soap bcmath json iconv \
+	&& docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath json iconv \
 	&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && pecl install xdebug && docker-php-ext-enable xdebug \
     && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
