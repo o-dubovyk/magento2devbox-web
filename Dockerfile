@@ -26,12 +26,15 @@ RUN apt-get update && apt-get install -y \
     expect \
     libzip-dev \
     mc
-RUN curl -L https://github.com/bcpierce00/unison/archive/2.48.4.tar.gz | tar zxv -C /tmp && \
-             cd /tmp/unison-2.48.4 && \
+#RUN curl -L https://github.com/bcpierce00/unison/archive/2.48.4.tar.gz | tar zxv -C /tmp && \
+RUN curl -L https://github.com/bcpierce00/unison/archive/v2.48.15v4.tar.gz | tar zxv -C /tmp && \
+#             cd /tmp/unison-2.48.4 && \
+             cd /tmp/unison-2.48.15v4 && \
              sed -i -e 's/GLIBC_SUPPORT_INOTIFY 0/GLIBC_SUPPORT_INOTIFY 1/' src/fsmonitor/linux/inotify_stubs.c && \
              make && \
              cp src/unison src/unison-fsmonitor /usr/local/bin && \
-             cd /root && rm -rf /tmp/unison-2.48.4 \
+#             cd /root && rm -rf /tmp/unison-2.48.4 \
+             cd /root && rm -rf /tmp/unison-2.48.15v4 \
 	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure hash --with-mhash \
 	# && docker-php-ext-install -j$(nproc) mcrypt intl xsl gd zip pdo_mysql opcache soap bcmath json iconv \
@@ -100,11 +103,12 @@ ENV MAGENTO_ENABLE_SYNC_MARKER 0
 
 RUN mkdir /windows \
  && cd /windows \
- && curl -L -o unison-windows.zip https://www.irif.fr/~vouillon/unison/unison%202.48.3.zip \
+# && curl -L -o unison-windows.zip https://www.irif.fr/~vouillon/unison/unison%202.48.3.zip \
+ && curl -L -o unison-windows.zip https://www.irif.fr/~vouillon/unison/unison%202.48.4.zip \
  && unzip unison-windows.zip \
  && rm unison-windows.zip \
- && mv 'unison 2.48.3 text.exe' unison.exe \
- && rm 'unison 2.48.3 GTK.exe' \
+ && mv 'unison 2.48.4 text.exe' unison.exe \
+ && rm 'unison 2.48.4 GTK.exe' \
  && chown -R magento2:magento2 .
 
 #RUN mkdir /mac-osx \
