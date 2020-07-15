@@ -60,7 +60,7 @@ class MagentoSetupElasticSearch extends AbstractCommand
         $config = [
             [
                 'path' => 'catalog/search/engine',
-                'value' => 'elasticsearch'
+                'value' => 'elasticsearch6'
             ],
             [
                 'path' => 'catalog/search/elasticsearch_server_hostname',

@@ -14,6 +14,7 @@ class ElasticSearch extends AbstractOptions
     const HOST = 'elastic-host';
     const PORT = 'elastic-port';
     const ELASTIC_MODULE_NAME = 'Magento_Elasticsearch';
+    const VERSION = 'elastic-version';
 
     /**
      * {@inheritdoc}
@@ -30,7 +31,7 @@ class ElasticSearch extends AbstractOptions
             ],
             static::HOST => [
                 'initial' => true,
-                'default' => 'elasticsearch',
+                'default' => 'elasticsearch6',
                 'description' => 'Magento ElasticSearch host.',
                 'question' => 'Please enter magento ElasticSearch host %default%'
             ],
@@ -39,6 +40,12 @@ class ElasticSearch extends AbstractOptions
                 'default' => '9200',
                 'description' => 'Magento ElasticSearch port.',
                 'question' => 'Please enter magento ElasticSearch port %default%'
+            ],
+            static::VERSION => [
+                'initial' => true,
+                'default' => 'elasticsearch6',
+                'description' => 'Magento ElasticSearch version.',
+                'question' => 'Please enter magento ElasticSearch version %default%'
             ]
         ];
     }

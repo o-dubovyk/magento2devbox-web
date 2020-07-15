@@ -10,6 +10,7 @@ use MagentoDevBox\Command\Options\Magento as MagentoOptions;
 use MagentoDevBox\Command\Options\Db as DbOptions;
 use MagentoDevBox\Command\Options\WebServer as WebServerOptions;
 use MagentoDevBox\Command\Options\RabbitMq as RabbitMqOptions;
+use MagentoDevBox\Command\Options\ElasticSearch as ElasticOptions;
 use MagentoDevBox\Library\Registry;
 use MagentoDevBox\Library\XDebugSwitcher;
 use Symfony\Component\Console\Input\InputInterface;
@@ -48,6 +49,8 @@ class MagentoSetup extends AbstractCommand
         $magentoBackendPath = $this->requestOption(MagentoOptions::BACKEND_PATH, $input, $output);
         $magentoAdminUser = $this->requestOption(MagentoOptions::ADMIN_USER, $input, $output);
         $magentoAdminPassword = $this->requestOption(MagentoOptions::ADMIN_PASSWORD, $input, $output);
+        $elasticHost = $input->getOption(ElasticOptions::HOST);
+        $elasticVersion = $input->getOption(ElasticOptions::VERSION);
 
         $command = sprintf(
             'cd %s && php bin/magento setup:install'
@@ -67,6 +70,14 @@ class MagentoSetup extends AbstractCommand
             $magentoAdminPassword,
             $magentoBackendPath
         );
+
+        if ($elasticHost && $elasticVersion) {
+            $command .= sprintf(
+                ' --search-engine=%s --elasticsearch-host=%s',
+                $elasticVersion,
+                $elasticHost
+            );
+        }
 
         if ($this->requestOption(RabbitMqOptions::SETUP, $input, $output)) {
             $amqpModuleExist = exec(
@@ -147,7 +158,10 @@ class MagentoSetup extends AbstractCommand
             WebServerOptions::HOME_PORT => WebServerOptions::get(WebServerOptions::HOME_PORT),
             RabbitMqOptions::SETUP => RabbitMqOptions::get(RabbitMqOptions::SETUP),
             RabbitMqOptions::HOST => RabbitMqOptions::get(RabbitMqOptions::HOST),
-            RabbitMqOptions::PORT => RabbitMqOptions::get(RabbitMqOptions::PORT)
+            RabbitMqOptions::PORT => RabbitMqOptions::get(RabbitMqOptions::PORT),
+            ElasticOptions::HOST => ElasticOptions::get(ElasticOptions::HOST),
+            ElasticOptions::PORT => ElasticOptions::get(ElasticOptions::PORT),
+            ElasticOptions::VERSION => ElasticOptions::get(ElasticOptions::VERSION),
         ];
     }
 }
