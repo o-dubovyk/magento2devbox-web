@@ -31,7 +31,7 @@ class ElasticSearch extends AbstractOptions
             ],
             static::HOST => [
                 'initial' => true,
-                'default' => 'elasticsearch6',
+                'default' => '',
                 'description' => 'Magento ElasticSearch host.',
                 'question' => 'Please enter magento ElasticSearch host %default%'
             ],
@@ -43,7 +43,7 @@ class ElasticSearch extends AbstractOptions
             ],
             static::VERSION => [
                 'initial' => true,
-                'default' => 'elasticsearch6',
+                'default' => '',
                 'description' => 'Magento ElasticSearch version.',
                 'question' => 'Please enter magento ElasticSearch version %default%'
             ]
