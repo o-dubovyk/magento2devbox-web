@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     mc
 #RUN curl -L https://github.com/bcpierce00/unison/archive/2.48.4.tar.gz | tar zxv -C /tmp && \
-RUN curl -) https://github.com/bcpierce00/unison/archive/v2.48.15v4.tar.gz | tar zxv -C /tmp && \
+RUN curl -L https://github.com/bcpierce00/unison/archive/v2.48.15v4.tar.gz | tar zxv -C /tmp && \
 #             cd /tmp/unison-2.48.4 && \
              cd /tmp/unison-2.48.15v4 && \
              sed -i -e 's/GLIBC_SUPPORT_INOTIFY 0/GLIBC_SUPPORT_INOTIFY 1/' src/fsmonitor/linux/inotify_stubs.c && \
@@ -35,9 +35,9 @@ RUN curl -) https://github.com/bcpierce00/unison/archive/v2.48.15v4.tar.gz | tar
              cp src/unison src/unison-fsmonitor /usr/local/bin && \
 #             cd /root && rm -rf /tmp/unison-2.48.4 \
              cd /root && rm -rf /tmp/unison-2.48.15v4 \
-    && curl -O https://download.libsodium.org/libsodium/releases/libsodium-1.0.18-stable.tar.gz
-    && tar xvf libsodium-1.0.18-stable.tar.gz
-    && cd libsodium-stable && ./confgure && make && make install
+    && curl -O https://download.libsodium.org/libsodium/releases/libsodium-1.0.18-stable.tar.gz \
+    && tar xvf libsodium-1.0.18-stable.tar.gz \
+    && cd libsodium-stable && ./confgure && make && make install \
 	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure hash --with-mhash \
 	# && docker-php-ext-install -j$(nproc) mcrypt intl xsl gd zip pdo_mysql opcache soap bcmath json iconv \
