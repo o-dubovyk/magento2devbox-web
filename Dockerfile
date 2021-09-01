@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     openssh-server \
     supervisor \
-    mysql-client \
+    default-mysql-client \
     ocaml \
     expect \
     libzip-dev \
@@ -38,7 +38,8 @@ RUN curl -L https://github.com/bcpierce00/unison/archive/v2.48.15v4.tar.gz | tar
              cd /root && rm -rf /tmp/unison-2.48.15v4 \
     #&& curl -L https://download.libsodium.org/libsodium/releases/libsodium-1.0.18-stable.tar.gz | tar zxv -C /tmp \
     #&& cd /tmp/libsodium-stable && make && make install \
-	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+	##&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
 	&& docker-php-ext-configure hash --with-mhash \
 	# && docker-php-ext-install -j$(nproc) mcrypt intl xsl gd zip pdo_mysql opcache soap bcmath json iconv \
 	&& docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath json iconv sockets \
